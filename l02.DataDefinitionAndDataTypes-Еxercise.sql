@@ -312,3 +312,103 @@ VALUES
 (3 ,3 ,3 ,'good' ,'empty' ,24 ,33 ,34,'2021-12-31','2017-12-31',4,43,987,FALSE,'asdasdasdfsd'),
 (4 ,4 ,4 ,'good' ,'full' ,232,324,328,'2021-12-31','2016-12-31',5,23,987,TRUE,'asdas'),
 (5 ,5 ,5 ,'good' ,'full' ,42 ,334 ,32,'2021-12-31','2013-12-31',6,34,987,TRUE,'asdasdasdafsd');
+
+-- Problem 13
+
+CREATE DATABASE `soft_uni`;
+USE `soft_uni`;
+
+CREATE TABLE `towns`(
+`id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+`name` VARCHAR(50)
+);
+
+CREATE TABLE `addresses`(
+`id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+`address_text` TEXT,
+`town_id` INT,
+CONSTRAINT fk_town_addresses
+FOREIGN KEY (`town_id`) REFERENCES `towns` (`id`)
+);
+
+CREATE TABLE `departments`(
+`id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+`name` VARCHAR(50)
+);
+
+CREATE TABLE `employees`(
+-- id, first_name, middle_name, last_name, job_title, department_id, hire_date, salary, address_id
+`id` INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+`first_name` VARCHAR (50) NOT NULL,
+`middle_name` VARCHAR (50) NOT NULL,
+`last_name` VARCHAR (50) NOT NULL,
+`job_title` VARCHAR(60),
+`department_id` INT,
+`hire_date` DATE,
+`salary` INT,
+`address_id` INT,
+CONSTRAINT fk_employees_departments
+FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`),
+CONSTRAINT fk_employees_adresses
+FOREIGN KEY (`address_id`) REFERENCES `addresses` (`id`)
+);
+
+INSERT INTO `towns` (`name`)
+VALUES
+('Sofia'),
+('Plovdiv'),
+('Varna'),
+('Burgas');
+
+INSERT INTO `departments` (`name`)
+VALUES
+('Engineering'),
+('Sales'),
+('Marketing'),
+('Software Development'),
+('Quality Assurance');
+
+INSERT INTO `employees`(first_name, middle_name, last_name, job_title, department_id, hire_date, salary)
+VALUES
+('Ivan','Ivanov','Ivanov','.NET Developer',4 ,'2013-02-01',3500.00),
+('Petar','Petrov','Petrov','Senior Engineer',1 ,'2004-03-02',4000.00),
+('Maria','Petrova','Ivanova','Intern',5 ,'2016-08-28',525.25),
+('Georgi','Terziev','Ivanov','CEO',2 ,'2007-12-09',3000.00),
+('Peter','Pan','Pan','Intern', 3,'2016-08-28',599.88);
+
+-- Problem 14
+SELECT * FROM `towns`;
+SELECT * FROM `departments`;
+SELECT * FROM `employees`;
+
+-- Problem 15
+SELECT * FROM `towns`
+ORDER BY `name`;
+
+SELECT * FROM `departments`
+ORDER BY `name`;
+
+SELECT * FROM `employees`
+ORDER BY `salary`DESC;
+
+-- Problem 16
+
+SELECT `name` FROM `towns`
+ORDER BY `name`;
+
+SELECT `name` FROM `departments`
+ORDER BY `name`;
+
+SELECT `first_name`, `last_name`, `job_title`, `salary` FROM `employees`
+ORDER BY `salary`;
+
+-- Problem 17
+
+UPDATE `employees`
+SET `salary` = `salary` * 1.1;
+
+SELECT `salary` FROM `employees`;
+
+-- Problem 18
+
+TRUNCATE TABLE `occupancies`;
